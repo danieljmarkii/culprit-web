@@ -1,0 +1,289 @@
+---
+import Base from '../layouts/Base.astro';
+import Mark from '../components/Mark.astro';
+import Wordmark from '../components/Wordmark.astro';
+
+const title = 'Culprit — Find the culprit behind your pet’s symptoms';
+const description =
+  'Culprit is a calm way to track the foods, symptoms, and patterns behind how your pet feels, and turn weeks of notes into a report your vet can use. Coming soon to the App Store.';
+
+const steps = [
+  {
+    n: '01',
+    head: 'Log in seconds',
+    body: 'Tap what happened — a meal, a symptom, a photo. No long forms. Fast enough to keep up with a real week.',
+  },
+  {
+    n: '02',
+    head: 'See what lines up',
+    body: 'As the logs add up, Culprit surfaces what tends to line up — like itching that follows meals with chicken, but not salmon.',
+  },
+  {
+    n: '03',
+    head: 'Hand your vet a clear report',
+    body: 'Turn weeks of notes into a clean, clinical-grade summary your vet can read in about a minute.',
+  },
+];
+---
+
+<Base title={title} description={description} theme="night">
+  <!-- ── Hero (night ground) ─────────────────────────────────────────────── -->
+  <section class="hero">
+    <nav class="hero__nav container" aria-label="Primary">
+      <a href="/support">Support</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+    </nav>
+
+    <div class="hero__body container">
+      <Mark size={64} class="hero__mark" />
+      <Wordmark size="clamp(2.75rem, 9vw, 4.5rem)" class="hero__wordmark" />
+
+      <h1 class="hero__prop">Find the culprit behind your pet&rsquo;s symptoms.</h1>
+      <p class="hero__sub">
+        A calm way to track the foods, symptoms, and small moments that add up —
+        built for owners on a diet trial or symptom watch.
+      </p>
+
+      <p class="hero__cta" aria-label="Coming soon to the App Store">
+        <span class="dot" aria-hidden="true"></span>
+        Coming soon to the App Store
+      </p>
+    </div>
+  </section>
+
+  <!-- ── The problem (light ground) ──────────────────────────────────────── -->
+  <section class="section band-light">
+    <div class="container two-col">
+      <p class="eyebrow">The problem</p>
+      <div class="prose">
+        <h2>The clue is in the small stuff. It&rsquo;s just hard to hold on to.</h2>
+        <p>
+          A vet can only work with what gets written down. The thread that ties a
+          flare-up to a food, or a good stretch to a change, is usually buried in
+          the day-to-day — what your pet ate, when a symptom showed up, how the
+          week actually went.
+        </p>
+        <p>
+          Most trackers ask too much, so the logging fades by day three. Patterns
+          need weeks of honest notes to surface, and that only happens when
+          logging stays effortless.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── How it works (white surface) ────────────────────────────────────── -->
+  <section class="section band-surface">
+    <div class="container">
+      <p class="eyebrow">How it works</p>
+      <h2 class="section__head">Three steps, and the pattern does the talking.</h2>
+      <ol class="steps">
+        {
+          steps.map((s) => (
+            <li class="step">
+              <span class="step__n">{s.n}</span>
+              <h3 class="step__head">{s.head}</h3>
+              <p class="step__body">{s.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- ── Pets over profit (night band) ───────────────────────────────────── -->
+  <section class="section band-night">
+    <div class="container two-col">
+      <p class="eyebrow eyebrow--on-dark">What it costs</p>
+      <div class="prose prose--on-dark">
+        <h2>The core stays free. For every pet.</h2>
+        <p>
+          Logging, health flags, trends, and the vet report are free, and they
+          stay free. No trial countdown, no per-pet fee. Culprit earns its keep
+          elsewhere, never by putting your pet&rsquo;s health behind a paywall.
+        </p>
+        <p class="closing">
+          Culprit is on its way to the App Store. Questions in the meantime?
+          Reach us at <a class="link-accent" href="mailto:support@getculprit.app"
+            >support@getculprit.app</a
+          >.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ── Hero ─────────────────────────────────────────────────────────────── */
+  .hero {
+    background: var(--brand-night);
+    color: var(--moonlight);
+    position: relative;
+    overflow: hidden;
+  }
+  /* A faint teal signal glow, low and calm — one accent, used sparingly. */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: -20% 0 auto 0;
+    height: 60%;
+    background: radial-gradient(
+      60% 60% at 50% 0%,
+      rgba(0, 194, 168, 0.14),
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+  .hero__nav {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-3);
+    padding-top: var(--space-3);
+    position: relative;
+    z-index: 1;
+  }
+  .hero__nav a {
+    color: var(--text-on-dark-secondary);
+    text-decoration: none;
+    font-size: 0.9375rem;
+  }
+  .hero__nav a:hover {
+    color: var(--moonlight);
+  }
+  .hero__body {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding-block: clamp(3rem, 10vw, 7rem) clamp(4rem, 12vw, 8rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .hero__mark {
+    color: var(--moonlight);
+    margin-bottom: var(--space-3);
+  }
+  .hero__wordmark {
+    color: var(--moonlight);
+  }
+  .hero__prop {
+    margin-top: var(--space-4);
+    max-width: 18ch;
+    font-size: clamp(1.75rem, 5vw, 3rem);
+    color: var(--moonlight);
+  }
+  .hero__sub {
+    margin-top: var(--space-3);
+    max-width: 46ch;
+    font-size: clamp(1.0625rem, 2.2vw, 1.25rem);
+    line-height: 1.6;
+    color: var(--text-on-dark-secondary);
+  }
+  .hero__cta {
+    margin-top: var(--space-4);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.65rem 1.15rem;
+    border: 1px solid var(--border-on-dark);
+    border-radius: var(--radius-full);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: var(--moonlight);
+  }
+  .hero__cta .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px rgba(0, 194, 168, 0.18);
+  }
+
+  /* ── Bands ────────────────────────────────────────────────────────────── */
+  .band-light {
+    background: var(--light-ground);
+  }
+  .band-surface {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .band-night {
+    background: var(--brand-night);
+    color: var(--moonlight);
+  }
+
+  /* ── Two-column section (eyebrow | prose) ─────────────────────────────── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+  @media (min-width: 800px) {
+    .two-col {
+      grid-template-columns: 12rem 1fr;
+      gap: var(--space-4);
+    }
+  }
+  .prose h2 {
+    margin-top: 0;
+    font-size: clamp(1.5rem, 3.4vw, 2.125rem);
+    color: var(--text-primary);
+  }
+  .prose--on-dark h2 {
+    color: var(--moonlight);
+  }
+  .prose--on-dark p {
+    color: var(--text-on-dark-secondary);
+  }
+  .eyebrow--on-dark {
+    color: var(--accent-soft);
+  }
+  .closing {
+    margin-top: var(--space-3);
+  }
+
+  /* ── How it works ─────────────────────────────────────────────────────── */
+  .section__head {
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-4);
+    max-width: 22ch;
+    font-size: clamp(1.5rem, 3.4vw, 2.125rem);
+  }
+  .steps {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    counter-reset: none;
+  }
+  @media (min-width: 720px) {
+    .steps {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-3);
+    }
+  }
+  .step {
+    padding-top: var(--space-2);
+    border-top: 2px solid var(--accent);
+  }
+  .step__n {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--accent);
+  }
+  .step__head {
+    margin-top: var(--space-1);
+    font-size: 1.1875rem;
+    color: var(--text-primary);
+  }
+  .step__body {
+    margin-top: 0.6rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+</style>

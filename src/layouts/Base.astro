@@ -1,0 +1,59 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import '../styles/global.css';
+
+// Self-hosted fonts (no third-party requests): Geist (body) + Newsreader (display).
+import '@fontsource/geist-sans/400.css';
+import '@fontsource/geist-sans/500.css';
+import '@fontsource/geist-sans/600.css';
+import '@fontsource-variable/newsreader';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  index?: boolean;
+  /** Dark hero pages get a night <html> background so there's no light flash. */
+  theme?: 'light' | 'night';
+}
+const {
+  title,
+  description,
+  image,
+  index = true,
+  theme = 'light',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" data-theme={theme}>
+  <head>
+    <BaseHead title={title} description={description} image={image} index={index} />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <main id="main">
+      <slot />
+    </main>
+    <SiteFooter />
+    <style>
+      html[data-theme='night'] {
+        background: var(--brand-night);
+      }
+      .skip-link {
+        position: absolute;
+        left: -999px;
+        top: 0;
+        z-index: 10;
+        background: var(--brand-night);
+        color: var(--text-on-dark);
+        padding: 0.5rem 1rem;
+        border-radius: 0 0 var(--radius-sm) 0;
+      }
+      .skip-link:focus {
+        left: 0;
+      }
+    </style>
+  </body>
+</html>

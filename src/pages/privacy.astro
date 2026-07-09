@@ -1,0 +1,44 @@
+---
+import Page from '../layouts/Page.astro';
+
+const title = 'Privacy Policy — Culprit';
+const description =
+  'Culprit is being built privacy-first. Our full privacy policy publishes here before launch. Data questions: privacy@getculprit.app.';
+---
+
+<Page
+  title={title}
+  heading="Privacy Policy"
+  description={description}
+  index={false}
+  updated="Draft in progress — the full policy publishes here before Culprit launches."
+>
+  <p>
+    Culprit is being built privacy-first, and our full privacy policy is being
+    finalized. It will be published on this page before Culprit is available to
+    download.
+  </p>
+
+  <h2>What it will cover</h2>
+  <p>When it lands, the policy will explain, in plain language:</p>
+  <ul>
+    <li>what Culprit collects, and why;</li>
+    <li>the services that help process it, and what each one sees;</li>
+    <li>how long information is kept;</li>
+    <li>how to delete your account and all of its data, at any time.</li>
+  </ul>
+
+  <h2>About this website</h2>
+  <p>
+    This site, getculprit.app, is a static page. It doesn&rsquo;t set
+    advertising cookies, and it doesn&rsquo;t sell your data. If we later add
+    analytics, we&rsquo;ll use a cookieless, privacy-respecting option and name
+    it here.
+  </p>
+
+  <h2>Questions in the meantime</h2>
+  <p>
+    Email <a href="mailto:privacy@getculprit.app">privacy@getculprit.app</a> with
+    any question about your data and we&rsquo;ll reply.
+  </p>
+</Page>

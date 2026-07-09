@@ -1,0 +1,87 @@
+---
+import Mark from './Mark.astro';
+const year = 2026;
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <a href="/" class="footer__logo" aria-label="Culprit home">
+        <Mark size={28} />
+        <span class="footer__wordmark">Culprit</span>
+      </a>
+      <p class="footer__note">
+        Culprit is a tool for tracking and noticing patterns in your pet's
+        health. It does not diagnose, treat, or replace veterinary care.
+      </p>
+    </div>
+
+    <nav class="footer__nav" aria-label="Footer">
+      <a href="/support">Support</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+      <a href="mailto:support@getculprit.app">support@getculprit.app</a>
+    </nav>
+  </div>
+
+  <div class="container footer__meta">
+    <p>&copy; {year} Culprit</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding-block: var(--space-5) var(--space-3);
+  }
+  .footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .footer__brand {
+    max-width: 40ch;
+  }
+  .footer__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    color: var(--brand-night);
+  }
+  .footer__wordmark {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .footer__note {
+    margin-top: var(--space-2);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--text-tertiary);
+  }
+  .footer__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    font-size: 0.9375rem;
+  }
+  .footer__nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+  .footer__nav a:hover {
+    color: var(--accent);
+  }
+  .footer__meta {
+    margin-top: var(--space-4);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--border);
+    font-size: 0.8125rem;
+    color: var(--text-tertiary);
+  }
+</style>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://getculprit.app/sitemap-index.xml

@@ -1,0 +1,10 @@
+# Cloudflare redirects. Under Workers Static Assets, _redirects allows
+# RELATIVE (same-host) URLs only — cross-host redirects are rejected.
+# https://developers.cloudflare.com/workers/static-assets/redirects-and-headers/
+#
+# The canonical www -> apex (getculprit.app) redirect is cross-host, so it does
+# NOT belong here — set it up as a zone-level Redirect Rule in the Cloudflare
+# dashboard (Rules -> Redirect Rules). See README "Deploy".
+
+# Serve our SVG mark for the implicit /favicon.ico request from older clients.
+/favicon.ico /favicon.svg 301
