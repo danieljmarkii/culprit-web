@@ -1,10 +1,10 @@
-# Cloudflare Pages redirects. https://developers.cloudflare.com/pages/configuration/redirects/
+# Cloudflare redirects. Under Workers Static Assets, _redirects allows
+# RELATIVE (same-host) URLs only — cross-host redirects are rejected.
+# https://developers.cloudflare.com/workers/static-assets/redirects-and-headers/
 #
-# Canonical host is the apex getculprit.app; www 301s to it (§4/§12 #4).
-# NOTE: for this to fire, www.getculprit.app must be attached as a custom domain
-# on the Pages project. The more robust alternative is a zone-level Redirect Rule
-# in the Cloudflare dashboard — see README "Deploy". This file is the backstop.
-https://www.getculprit.app/* https://getculprit.app/:splat 301
+# The canonical www -> apex (getculprit.app) redirect is cross-host, so it does
+# NOT belong here — set it up as a zone-level Redirect Rule in the Cloudflare
+# dashboard (Rules -> Redirect Rules). See README "Deploy".
 
 # Serve our SVG mark for the implicit /favicon.ico request from older clients.
 /favicon.ico /favicon.svg 301

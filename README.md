@@ -74,15 +74,16 @@ this repo via Workers Builds; every push to the production branch runs:
 - **Build command:** `npm run build` → `./dist`
 - **Deploy command:** `npx wrangler deploy`
 
-`_headers` (CSP/security + cache) and `_redirects` (www → apex 301) live in
-`public/` and are copied into `./dist`, where Static Assets honours them.
-Clean URLs (`/support` → `support.html`) come from `assets.html_handling`.
+`_headers` (CSP/security + cache) and `_redirects` (relative redirects only)
+live in `public/` and are copied into `./dist`, where Static Assets honours
+them. Clean URLs (`/support` → `support.html`) come from `assets.html_handling`.
 
 - **Custom domains** (Worker → Domains tab): `getculprit.app` (apex, canonical)
   and `www.getculprit.app`.
-- **www → apex:** `public/_redirects` handles it. For a host-level redirect
-  independent of the Worker route, add a **Redirect Rule** (Rules → Redirect
-  Rules): match `Hostname equals www.getculprit.app` → dynamic redirect to
+- **www → apex:** must be a zone-level **Redirect Rule** — Workers Static
+  Assets `_redirects` allows same-host (relative) URLs only, so the cross-host
+  www → apex redirect can't live there. Dashboard → **Rules → Redirect Rules →
+  Create**: if `Hostname equals www.getculprit.app` → dynamic redirect to
   `concat("https://getculprit.app", http.request.uri.path)`, status 301.
 - **TLS:** automatic (`.app` is HSTS-preloaded, so HTTPS is forced by design).
 
