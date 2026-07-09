@@ -1,0 +1,43 @@
+---
+// The Culprit wordmark: Newsreader display, the dotless "ı" (U+0131), and the
+// teal Signal dot standing in for its tittle. Letterforms inherit `currentColor`
+// (moonlight on the night ground, midnight-indigo on light); the dot is the
+// fixed teal accent. Rendered as live text so it scales with `font-size`.
+interface Props {
+  size?: string; // any CSS font-size, e.g. "2.5rem"
+  class?: string;
+}
+const { size = '2.5rem', class: className = '' } = Astro.props;
+---
+
+<span class={`wordmark ${className}`} style={`font-size:${size}`} aria-label="Culprit">
+  <span aria-hidden="true">Culpr</span><span class="wordmark__i" aria-hidden="true"
+    >ı<span class="wordmark__dot"></span></span
+  ><span aria-hidden="true">t</span>
+</span>
+
+<style>
+  .wordmark {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: inherit;
+    white-space: nowrap;
+  }
+  .wordmark__i {
+    position: relative;
+    display: inline-block;
+  }
+  .wordmark__dot {
+    position: absolute;
+    left: 50%;
+    top: 0.04em;
+    width: 0.15em;
+    height: 0.15em;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: var(--accent);
+  }
+</style>

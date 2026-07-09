@@ -1,0 +1,66 @@
+---
+import Base from './Base.astro';
+import Mark from '../components/Mark.astro';
+
+interface Props {
+  title: string; // <title> / SEO
+  heading: string; // on-page H1
+  description: string;
+  index?: boolean;
+  updated?: string; // optional "Last updated" line
+}
+const { title, heading, description, index = true, updated } = Astro.props;
+---
+
+<Base title={title} description={description} index={index}>
+  <header class="pagehead">
+    <div class="container">
+      <a href="/" class="pagehead__home" aria-label="Culprit home">
+        <Mark size={26} />
+        <span>Culprit</span>
+      </a>
+      <h1 class="pagehead__title">{heading}</h1>
+      {updated && <p class="pagehead__updated">{updated}</p>}
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <article class="prose">
+        <slot />
+      </article>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .pagehead {
+    background: var(--brand-night);
+    color: var(--moonlight);
+    padding-block: var(--space-3) var(--space-5);
+  }
+  .pagehead__home {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--moonlight);
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .pagehead__home span {
+    opacity: 0.95;
+  }
+  .pagehead__title {
+    margin-top: var(--space-4);
+    font-size: clamp(2rem, 6vw, 3rem);
+    color: var(--moonlight);
+  }
+  .pagehead__updated {
+    margin-top: var(--space-2);
+    font-size: 0.875rem;
+    color: var(--text-on-dark-secondary);
+  }
+</style>

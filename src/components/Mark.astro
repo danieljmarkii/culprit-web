@@ -1,0 +1,27 @@
+---
+// The "Moon & Signal" mark (B-275): a moonlight crescent + the teal Signal dot.
+// The crescent uses `currentColor` so it can be moonlight on the night ground
+// or midnight-indigo on a light ground; the teal dot is the fixed accent.
+interface Props {
+  size?: number | string;
+  class?: string;
+  title?: string;
+}
+const { size = 40, class: className = '', title = 'Culprit' } = Astro.props;
+const dim = typeof size === 'number' ? `${size}px` : size;
+---
+
+<svg
+  class={className}
+  width={dim}
+  height={dim}
+  viewBox="0 0 1024 1024"
+  role="img"
+  aria-label={title}
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M 744.3 241.7 A 330 330 0 1 0 744.3 782.3 A 268 268 0 0 1 744.3 241.7 Z"
+    fill="currentColor"></path>
+  <circle cx="695" cy="512" r="70" fill="#00C2A8"></circle>
+</svg>

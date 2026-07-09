@@ -1,0 +1,61 @@
+---
+// Per-page <head>: title, description, canonical, Open Graph + Twitter card,
+// favicons, theme-color. Canonical host is the apex getculprit.app.
+interface Props {
+  title: string;
+  description: string;
+  /** Path-relative OG image, defaults to the brand card. */
+  image?: string;
+  /** Set false on shell/utility pages you'd rather keep out of search. */
+  index?: boolean;
+}
+
+const {
+  title,
+  description,
+  image = '/og-image.png',
+  index = true,
+} = Astro.props;
+
+const site = Astro.site ?? new URL('https://getculprit.app');
+// build.format='file' emits /support.html, but Cloudflare Pages serves the
+// clean, extensionless URL as canonical — strip .html (and index) to match.
+const cleanPath =
+  Astro.url.pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/';
+const canonical = new URL(cleanPath, site);
+const ogImage = new URL(image, site);
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{!index && <meta name="robots" content="noindex, follow" />}
+
+<!-- Favicons (Culprit "Moon & Signal" mark) -->
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<meta name="theme-color" content="#13112E" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Culprit" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Culprit — find the culprit behind your pet's symptoms" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<link rel="sitemap" href="/sitemap-index.xml" />
