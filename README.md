@@ -64,18 +64,28 @@ fonts through fontconfig — so the Geist/Newsreader faces must be registered
 The committed `public/*.png` outputs mean you only need this when the brand
 changes.
 
-## Deploy (Cloudflare Pages)
+## Deploy (Cloudflare Workers Static Assets)
 
-Connected to this repo; every push to the production branch builds and deploys.
+Deployed as a Cloudflare **Worker with Static Assets** (Cloudflare's current
+recommended path for static sites; equivalent free static hosting to Pages).
+Config is `wrangler.jsonc` — it points static assets at `./dist`. Connected to
+this repo via Workers Builds; every push to the production branch runs:
 
-- **Build command:** `npm run build`
-- **Output directory:** `dist`
-- **Custom domains:** `getculprit.app` (apex, canonical) and
-  `www.getculprit.app`.
-- **www → apex:** handled by `public/_redirects`. For a host-level redirect
-  that doesn't depend on the Pages route, add a **Redirect Rule** in the
-  Cloudflare dashboard (Rules → Redirect Rules): match
-  `Hostname equals www.getculprit.app` → dynamic redirect to
+- **Build command:** `npm run build` → `./dist`
+- **Deploy command:** `npx wrangler deploy`
+
+`_headers` (CSP/security + cache) and `_redirects` (www → apex 301) live in
+`public/` and are copied into `./dist`, where Static Assets honours them.
+Clean URLs (`/support` → `support.html`) come from `assets.html_handling`.
+
+- **Custom domains** (Worker → Domains tab): `getculprit.app` (apex, canonical)
+  and `www.getculprit.app`.
+- **www → apex:** `public/_redirects` handles it. For a host-level redirect
+  independent of the Worker route, add a **Redirect Rule** (Rules → Redirect
+  Rules): match `Hostname equals www.getculprit.app` → dynamic redirect to
   `concat("https://getculprit.app", http.request.uri.path)`, status 301.
 - **TLS:** automatic (`.app` is HSTS-preloaded, so HTTPS is forced by design).
-- Security headers and cache policy live in `public/_headers`.
+
+> Prefer Cloudflare Pages instead? Delete `wrangler.jsonc`, create a **Pages**
+> project (Connect to Git → Pages), and set build command `npm run build` /
+> output dir `dist`. The `_headers`/`_redirects` files work there too.

@@ -1,0 +1,12 @@
+{
+  // Deploy the built static site as a Cloudflare Worker with Static Assets.
+  // `npm run build` produces ./dist; `npx wrangler deploy` uploads it.
+  // Clean URLs (/support -> support.html) come from html_handling; the
+  // _headers and _redirects files in ./dist are honoured by static assets.
+  "name": "culprit-web",
+  "compatibility_date": "2025-11-01",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash"
+  }
+}
