@@ -28,3 +28,12 @@
 
 - Founder-note copy needs the PM's real voice (range: one-liner → short note → /about page).
 - CTA slot remains waitlist-first (pre-order badge at approval, download badge at launch) — unchanged from the funnel memo; PM signaled agreement by prioritizing "enter email OR download the app" as the page's goal.
+
+---
+
+## Round 2 PM reactions (2026-07-10) — CONVERGED
+
+- **D:** "Genuinely love the large whorl and in-app screenshot/value-prop style hero." Exhibit 01 ("what does *a lot* mean?") = "genius pet-owner branding." → **D ratified as the direction.**
+- **E:** whorl better centered (D's treatment wins); "love the brevity" → brevity budget + sticky mobile CTA adopted into the plan.
+- **F:** "Genuinely interesting. I don't think I want to go this far. But let's work elements in." → night-sky ambience only (hero starfield, Exhibit-03 star scatter); scrollytelling out.
+- **PM ask:** produce requirement spec + PR-by-PR plan to production → `website-v2-requirements.md`.
