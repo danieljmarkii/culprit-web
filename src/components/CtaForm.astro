@@ -1,0 +1,162 @@
+---
+// The CTA swap slot (v2 spec §5): one component, one build-time flag
+// (PUBLIC_CTA_STATE), so the page's single goal can flip
+// waitlist → pre-order → download without touching layout.
+//
+// States:
+//   announce — calm "coming soon" pill. The default while v2-2 (the
+//              /api/subscribe Worker, gated on Buttondown provisioning) is
+//              unmerged: a form that dead-ends would break the prod-coherence
+//              gate. v2-2 flips the default to waitlist.
+//   waitlist — email + "Get early access", plain HTML POST (zero client JS;
+//              CSP form-action 'self' already covers it). Includes the
+//              honeypot field the Worker checks.
+//   preorder / download — land with launch-1/launch-2 (Apple badge assets
+//              must not enter the repo before approval — §5).
+type CtaState = 'announce' | 'waitlist' | 'preorder' | 'download';
+
+interface Props {
+  /** Anchor for the nav / mid-page "Get early access" buttons. */
+  id?: string;
+  class?: string;
+}
+
+const state = (import.meta.env.PUBLIC_CTA_STATE ?? 'announce') as CtaState;
+
+if (state === 'preorder' || state === 'download') {
+  // Fail the build loudly rather than shipping a half-state.
+  throw new Error(
+    `PUBLIC_CTA_STATE="${state}" isn't built yet — it lands with the launch-1/launch-2 badge PRs (v2 spec §5/§9).`,
+  );
+}
+
+const { id, class: className = '' } = Astro.props;
+---
+
+<div class:list={['cta', className]} id={id}>
+  {
+    state === 'waitlist' ? (
+      <>
+        <form
+          class="cta__form"
+          method="post"
+          action="/api/subscribe"
+          aria-label="Get early access"
+        >
+          <input
+            type="email"
+            name="email"
+            placeholder="you@example.com"
+            aria-label="Email address"
+            autocomplete="email"
+            required
+          />
+          {/* Honeypot (v2-2 contract): humans never see or fill this. */}
+          <input
+            class="cta__hp"
+            type="text"
+            name="website"
+            tabindex="-1"
+            autocomplete="off"
+            aria-hidden="true"
+          />
+          <button class="btn" type="submit">
+            Get early access
+          </button>
+        </form>
+        <p class="cta__note">
+          One email when Culprit reaches the App Store. No newsletter,
+          unsubscribe in a tap.
+        </p>
+      </>
+    ) : (
+      <p class="status-pill">
+        <i aria-hidden="true" />
+        Coming soon to the App Store
+      </p>
+    )
+  }
+</div>
+
+<style>
+  /* Assumes the night ground — both CTA bands (hero, final) live on it. */
+  .cta {
+    margin-top: 34px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+  }
+  .cta__form {
+    display: flex;
+    gap: 10px;
+    width: min(480px, 100%);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-on-dark);
+    border-radius: var(--radius-full);
+    padding: 6px;
+    backdrop-filter: blur(6px);
+  }
+  .cta__form input[type='email'] {
+    flex: 1;
+    min-width: 0;
+    min-height: 44px; /* tap target (§8) */
+    background: transparent;
+    border: 0;
+    outline: 0;
+    color: var(--moonlight);
+    font-family: var(--font-body);
+    font-size: 1rem; /* ≥16px — no iOS focus zoom */
+    padding: 10px 12px 10px 18px;
+  }
+  .cta__form input[type='email']::placeholder {
+    color: #8b88a6;
+  }
+  .cta__form input[type='email']:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: var(--radius-full);
+  }
+  .cta__hp {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+  .cta__note {
+    font-size: 0.8125rem;
+    color: #8b88a6;
+  }
+  @media (max-width: 520px) {
+    .cta__form {
+      flex-direction: column;
+      border-radius: var(--radius-lg);
+      padding: 10px;
+    }
+    .cta__form .btn {
+      width: 100%;
+    }
+  }
+
+  /* announce */
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    border: 1px solid var(--border-on-dark);
+    border-radius: var(--radius-full);
+    padding: 9px 17px;
+    font-size: 0.84375rem;
+    color: var(--text-on-dark-secondary);
+  }
+  .status-pill i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px rgba(0, 194, 168, 0.18);
+  }
+</style>

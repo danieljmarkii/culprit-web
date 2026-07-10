@@ -28,10 +28,12 @@
   --text-secondary: #525252;
   --text-tertiary: #737373;
   --text-on-dark: #ffffff;
-  --text-on-dark-secondary: #b4b8b4;
+  /* Night neutrals lean indigo (v2 D palette) so they sit in the night
+     ground rather than on it. */
+  --text-on-dark-secondary: #b9b6ce;
   --border: #eaeaea;
   --border-strong: #d4d4d4;
-  --border-on-dark: #33383a;
+  --border-on-dark: #2e2b4e;
 
   /* Type families */
   --font-body: 'Geist Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -178,6 +180,118 @@ h3 {
   }
 }
 
+/* ── Recreated app UI primitives (v2) ───────────────────────────────────── */
+/* Shared by the hero app-card and the exhibit cards (ValuePreview
+   discipline: recreated UI, never doctored screenshots). Always on paper
+   grounds, so ink text is safe. Symptom rose (#f43f5e / #ffe4e6) mirrors the
+   app's symptom hue and stays literal until the app exports it. */
+.ui-label {
+  font-size: 0.65625rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.ui-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 13px 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.ui-signal {
+  display: flex;
+  gap: 11px;
+  margin-top: 6px;
+}
+
+.ui-rail {
+  width: 3px;
+  border-radius: 2px;
+  background: var(--accent);
+  flex: none;
+}
+
+.ui-headline {
+  font-family: var(--font-display);
+  font-size: 1.15625rem;
+  line-height: 1.34;
+  letter-spacing: -0.01em;
+  font-weight: 420;
+  color: var(--text-primary);
+}
+
+.ui-meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.ui-badge {
+  font-size: 0.59375rem;
+  font-weight: 600;
+  background: var(--surface-subtle);
+  border-radius: var(--radius-full);
+  padding: 2px 8px;
+  color: var(--text-secondary);
+}
+
+.ui-sample {
+  font-size: 0.65625rem;
+  color: var(--text-tertiary);
+}
+
+.ui-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 0;
+}
+
+.ui-row + .ui-row {
+  border-top: 1px solid var(--border);
+}
+
+.ui-row b {
+  font-size: 0.78125rem;
+  font-weight: 500;
+}
+
+.ui-row small {
+  display: block;
+  font-size: 0.65625rem;
+  color: var(--text-tertiary);
+}
+
+.ui-row time {
+  margin-left: auto;
+  font-size: 0.65625rem;
+  color: var(--text-tertiary);
+}
+
+.ui-ico {
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.ui-ico--meal {
+  background: var(--accent-light);
+  color: var(--accent-deep);
+}
+
+.ui-ico--sym {
+  background: #ffe4e6;
+  color: #f43f5e;
+}
+
 /* ── Scroll reveal (v2) ─────────────────────────────────────────────────── */
 /* `.reveal` alone is inert — content stays visible with no JS (§8 gate).
    Reveal.astro arms elements at runtime (and only when motion is allowed);
@@ -244,6 +358,18 @@ h3 {
 
 .prose a:hover {
   color: var(--accent);
+}
+
+/* .link-accent must keep its accent ink inside prose too — without this,
+   `.prose a` wins and paints it near-black (invisible on night bands). */
+.prose .link-accent {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.prose .link-accent:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .prose ul {

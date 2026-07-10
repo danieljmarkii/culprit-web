@@ -1,0 +1,56 @@
+---
+// A recreated Signal card: rail, descriptive headline, badge + sample size,
+// sparkline. Copy arrives via props so each usage site (hero app-card now,
+// Exhibit 03 at display scale in v2-4) keeps its copy in named constants for
+// nyx-voice review — descriptive-never-causal, sample sizes always shown.
+interface Props {
+  headline: string;
+  badge: string;
+  sample: string;
+  /** Sparkline path in a 220×40 viewBox; the dot marks the latest point. */
+  spark: { d: string; cx: number; cy: number };
+  class?: string;
+}
+const { headline, badge, sample, spark, class: className = '' } = Astro.props;
+---
+
+<div class:list={['ui-card', className]}>
+  <div class="ui-signal">
+    <div class="ui-rail"></div>
+    <div class="ui-signal__body">
+      <div class="ui-headline">{headline}</div>
+      <div class="ui-meta">
+        <span class="ui-badge">{badge}</span>
+        <span class="ui-sample">{sample}</span>
+      </div>
+      <svg
+        class="ui-spark"
+        width="100%"
+        height="36"
+        viewBox="0 0 220 40"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <path
+          d={spark.d}
+          stroke="var(--accent)"
+          stroke-width="2.4"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          fill="none"></path>
+        <circle cx={spark.cx} cy={spark.cy} r="3.4" fill="var(--accent)"
+        ></circle>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<style>
+  .ui-signal__body {
+    min-width: 0;
+    flex: 1;
+  }
+  .ui-spark {
+    margin-top: 9px;
+  }
+</style>

@@ -1,0 +1,72 @@
+---
+// Recreated "Today" log rows — one line per event, meal or symptom. Row copy
+// comes in as props (named constants at the usage site, per nyx-voice review).
+export interface TodayRow {
+  kind: 'meal' | 'symptom';
+  title: string;
+  detail: string;
+  time: string;
+}
+
+interface Props {
+  rows: readonly TodayRow[];
+  class?: string;
+}
+const { rows, class: className = '' } = Astro.props;
+---
+
+<div class:list={['ui-card', 'today', className]}>
+  {
+    rows.map((row) => (
+      <div class="ui-row">
+        <span
+          class:list={[
+            'ui-ico',
+            row.kind === 'meal' ? 'ui-ico--meal' : 'ui-ico--sym',
+          ]}
+        >
+          {row.kind === 'meal' ? (
+            <svg
+              width="13"
+              height="13"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <path d="M4 11h16" />
+              <path d="M5 11a7 7 0 0 1 14 0" />
+              <path d="M3 15h18" />
+            </svg>
+          ) : (
+            <svg
+              width="13"
+              height="13"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <path d="M12 3c-2 4-6 6.5-6 11a6 6 0 0 0 12 0c0-4.5-4-7-6-11z" />
+            </svg>
+          )}
+        </span>
+        <div>
+          <b>{row.title}</b>
+          <small>{row.detail}</small>
+        </div>
+        <time>{row.time}</time>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .today {
+    padding-block: 4px;
+  }
+</style>
