@@ -15,6 +15,12 @@
   --accent-light: #e0fbf7;
   --light-ground: #f7f6f2;
 
+  /* v2 "The Case, by Moonlight" additions (website-v2-requirements.md §4) */
+  --accent-deep: #009b86; /* accent-toned text on light grounds (AA) */
+  --paper: #fbfaf6; /* file-card / recreated-app paper */
+  --night-deep: #0e0d24; /* deepest night ground */
+  --btn-ink: #04241f; /* text on teal — ~8.5:1 on --accent */
+
   /* Neutrals & text (Linear Clean) */
   --surface: #ffffff;
   --surface-subtle: #f5f5f5;
@@ -30,6 +36,7 @@
   /* Type families */
   --font-body: 'Geist Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-display: 'Newsreader Variable', Newsreader, Georgia, 'Times New Roman', serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
   /* Spacing — 8pt grid */
   --space-1: 0.5rem;
@@ -106,6 +113,94 @@ h3 {
   letter-spacing: -0.01em;
   line-height: 1.15;
   text-wrap: balance;
+}
+
+/* Case-file display type (v2): lighter, tighter Newsreader at exhibit scale.
+   Italic <em> is the one emphasis move — the culprit gets the italic. */
+.disp {
+  font-family: var(--font-display);
+  font-weight: 390;
+  letter-spacing: -0.015em;
+  line-height: 1.07;
+  text-wrap: balance;
+}
+
+.disp em {
+  font-style: italic;
+}
+
+/* ── Mono evidence labels (v2): kickers, stamps, verdict lines ──────────── */
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.mono--teal {
+  color: var(--accent-deep);
+}
+
+/* ── Button (v2) ────────────────────────────────────────────────────────── */
+/* Contrast is a hard requirement (PM R1 fix): dark ink on teal (~8.5:1),
+   enforced regardless of context — never grey-on-teal. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px; /* ≥44px tap target */
+  padding: 11px 22px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--accent);
+  color: var(--btn-ink) !important;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(0, 194, 168, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+  .btn:hover {
+    transform: none;
+  }
+}
+
+/* ── Scroll reveal (v2) ─────────────────────────────────────────────────── */
+/* `.reveal` alone is inert — content stays visible with no JS (§8 gate).
+   Reveal.astro arms elements at runtime (and only when motion is allowed);
+   the observer then fades each one in. */
+.reveal--armed {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.reveal--armed.reveal--in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal--armed {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 /* ── Layout helpers ─────────────────────────────────────────────────────── */

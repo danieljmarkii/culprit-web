@@ -1,0 +1,51 @@
+---
+// The Whorl: the "Moon & Signal" crescent unwound into concentric arcs that
+// tighten toward the teal Signal dot — the case spiraling in on its culprit.
+// Purely decorative (aria-hidden); geometry matches the brand asset
+// (src/assets/brand/svg/culprit-whorl.svg) minus the night ground, so it can
+// sit on any dark surface. Size/opacity are props per the v2 spec (§4).
+interface Props {
+  /** CSS width — height follows the square viewBox (e.g. "min(92vw, 880px)"). */
+  size?: string;
+  opacity?: number | string;
+  class?: string;
+}
+const { size = '880px', opacity = 1, class: className = '' } = Astro.props;
+---
+
+<svg
+  class={className}
+  style={`width:${size};opacity:${opacity}`}
+  viewBox="0 0 1024 1024"
+  aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M 744.3 241.7 A 330 330 0 1 0 744.3 782.3 A 268 268 0 0 1 744.3 241.7 Z"
+    fill="none"
+    stroke="var(--moonlight)"
+    stroke-width="22"
+    stroke-linecap="round"></path>
+  <path
+    d="M 713.5 309.2 A 257.4 257.4 0 1 0 713.5 714.8 A 209.04 209.04 0 0 1 713.5 309.2 Z"
+    fill="none"
+    stroke="var(--accent)"
+    stroke-width="19"
+    stroke-linecap="round"
+    opacity="0.82"></path>
+  <path
+    d="M 676.2 372.5 A 184.8 184.8 0 1 0 676.2 651.5 A 150.08 150.08 0 0 1 676.2 372.5 Z"
+    fill="none"
+    stroke="var(--moonlight)"
+    stroke-width="16"
+    stroke-linecap="round"
+    opacity="0.64"></path>
+  <path
+    d="M 632.9 431.3 A 112.2 112.2 0 1 0 632.9 592.7 A 91.12 91.12 0 0 1 632.9 431.3 Z"
+    fill="none"
+    stroke="var(--accent)"
+    stroke-width="13"
+    stroke-linecap="round"
+    opacity="0.46"></path>
+  <circle cx="695" cy="512" r="52" fill="var(--accent)"></circle>
+</svg>

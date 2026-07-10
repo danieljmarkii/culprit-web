@@ -1,0 +1,29 @@
+---
+// The scroll-reveal pattern (v2 spec §4), IO-adds-hidden style: elements opt
+// in with class="reveal" and stay fully visible unless this script runs (§8 —
+// no content hidden without JS) and motion is allowed. Include once per page.
+// Astro bundles the script to a same-origin file, so `script-src 'self'`
+// holds — no inline scripts.
+---
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (els.length && !reduced && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal--in');
+            io.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.12 },
+    );
+    for (const el of els) {
+      el.classList.add('reveal--armed');
+      io.observe(el);
+    }
+  }
+</script>
