@@ -3,11 +3,23 @@ import BaseHead from '../components/BaseHead.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import '../styles/global.css';
 
-// Self-hosted fonts (no third-party requests): Geist (body) + Newsreader (display).
+// Self-hosted fonts (no third-party requests): Geist (body) + Newsreader
+// (display, upright + italic — the italic carries the brand emphasis) +
+// Geist Mono (evidence labels, kickers, stamps).
 import '@fontsource/geist-sans/400.css';
 import '@fontsource/geist-sans/500.css';
 import '@fontsource/geist-sans/600.css';
 import '@fontsource-variable/newsreader';
+import '@fontsource-variable/newsreader/wght-italic.css';
+import '@fontsource/geist-mono/400.css';
+
+// Preload the above-the-fold faces (latin only) so the hero paints in its
+// real type on first visit instead of waiting for CSS to discover them.
+import newsreaderUrl from '@fontsource-variable/newsreader/files/newsreader-latin-wght-normal.woff2?url';
+import newsreaderItalicUrl from '@fontsource-variable/newsreader/files/newsreader-latin-wght-italic.woff2?url';
+import geistUrl from '@fontsource/geist-sans/files/geist-sans-latin-400-normal.woff2?url';
+import geistMonoUrl from '@fontsource/geist-mono/files/geist-mono-latin-400-normal.woff2?url';
+const preloadFonts = [newsreaderUrl, newsreaderItalicUrl, geistUrl, geistMonoUrl];
 
 interface Props {
   title: string;
@@ -30,6 +42,17 @@ const {
 <html lang="en" data-theme={theme}>
   <head>
     <BaseHead title={title} description={description} image={image} index={index} />
+    {
+      preloadFonts.map((href) => (
+        <link
+          rel="preload"
+          as="font"
+          type="font/woff2"
+          href={href}
+          crossorigin
+        />
+      ))
+    }
   </head>
   <body>
     <a href="#main" class="skip-link">Skip to content</a>

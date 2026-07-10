@@ -18,5 +18,17 @@ export default defineConfig({
   build: {
     // Cleaner URLs: /support instead of /support/index.html
     format: 'file',
+    // Ship page CSS inline (<style> is covered by the CSP's style-src
+    // 'unsafe-inline'): one fewer render-blocking request on first visit,
+    // which is what a landing page mostly gets.
+    inlineStylesheets: 'always',
+  },
+  vite: {
+    build: {
+      // Never inline scripts/assets into the HTML: CSP is `script-src 'self'`
+      // (no 'unsafe-inline'), so Astro's small-script inlining would ship
+      // scripts the browser refuses to run. Bundled same-origin files only.
+      assetsInlineLimit: 0,
+    },
   },
 });
