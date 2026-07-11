@@ -1,0 +1,21 @@
+---
+import Page from '../layouts/Page.astro';
+
+// Where a failed waitlist signup lands (the Worker 303s here on a bad email or
+// if both storage and notification fail). noindex — utility page.
+const title = 'Something went wrong — Culprit';
+const description =
+  'That signup didn’t go through. Head back and try once more, or email us.';
+---
+
+<Page title={title} heading="That didn&rsquo;t go through" description={description} index={false}>
+  <p>
+    Sorry — we couldn&rsquo;t add you to the list just now. It was almost
+    certainly a hiccup on our end or a mistyped address.
+  </p>
+  <p>
+    <a href="/#join">Head back and try again</a>, or email
+    <a href="mailto:support@getculprit.app">support@getculprit.app</a> and
+    we&rsquo;ll add you by hand.
+  </p>
+</Page>

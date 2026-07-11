@@ -4,10 +4,10 @@
 // waitlist → pre-order → download without touching layout.
 //
 // States:
-//   announce — calm "coming soon" pill. The default while v2-2 (the
-//              /api/subscribe Worker, gated on Buttondown provisioning) is
-//              unmerged: a form that dead-ends would break the prod-coherence
-//              gate. v2-2 flips the default to waitlist.
+//   announce — calm "coming soon" pill. Was the default until v2-2 (the
+//              /api/subscribe Worker: Cloudflare D1 + a Resend notification)
+//              shipped; kept as a fallback for builds that set
+//              PUBLIC_CTA_STATE="announce" (e.g. if the backend is down).
 //   waitlist — email + "Get early access", plain HTML POST (zero client JS;
 //              CSP form-action 'self' already covers it). Includes the
 //              honeypot field the Worker checks.
@@ -21,7 +21,9 @@ interface Props {
   class?: string;
 }
 
-const state = (import.meta.env.PUBLIC_CTA_STATE ?? 'announce') as CtaState;
+// v2-2 flips the default to `waitlist` now that /api/subscribe exists
+// (PUBLIC_CTA_STATE can still override per build for the launch states).
+const state = (import.meta.env.PUBLIC_CTA_STATE ?? 'waitlist') as CtaState;
 
 if (state === 'preorder' || state === 'download') {
   // Fail the build loudly rather than shipping a half-state.
@@ -65,8 +67,8 @@ const { id, class: className = '' } = Astro.props;
           </button>
         </form>
         <p class="cta__note">
-          One email when Culprit reaches the App Store. No newsletter,
-          unsubscribe in a tap.
+          One email when Culprit reaches the App Store. No newsletter, nothing
+          else — ask us to remove you any time.
         </p>
       </>
     ) : (

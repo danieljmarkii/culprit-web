@@ -1,0 +1,22 @@
+---
+import Page from '../layouts/Page.astro';
+
+// Where a successful waitlist signup lands (the Worker 303s here). noindex —
+// a utility confirmation page, not a search destination.
+const title = 'You’re on the list — Culprit';
+const description =
+  'Thanks for joining the Culprit waitlist. We’ll email you once, when Culprit reaches the App Store.';
+---
+
+<Page title={title} heading="You&rsquo;re on the list" description={description} index={false}>
+  <p>
+    Thanks for signing up. We&rsquo;ll send you one email when Culprit reaches
+    the App Store — no newsletter, nothing else.
+  </p>
+  <p>
+    Want off the list, or have a question? Email
+    <a href="mailto:support@getculprit.app">support@getculprit.app</a> and
+    a real person will sort it out.
+  </p>
+  <p><a href="/">Back to home</a></p>
+</Page>

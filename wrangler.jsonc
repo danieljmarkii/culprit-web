@@ -8,8 +8,27 @@
   // Custom domain (getculprit.app) only — don't publish a *.workers.dev route,
   // which would require a registered workers.dev subdomain on first deploy.
   "workers_dev": false,
+  // Waitlist backend (v2 spec §6, ticket v2-2). The Worker runs alongside the
+  // static assets — assets are matched first; only unmatched paths
+  // (POST /api/subscribe) reach the Worker.
+  "main": "src/worker.ts",
   "assets": {
     "directory": "./dist",
     "html_handling": "auto-trailing-slash"
+  },
+  // D1 holds the waitlist (created in the dashboard; id below).
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "culprit-subscribers",
+      "database_id": "d539bbbf-4c33-490a-8d09-ac992aefbf84",
+      "migrations_dir": "migrations"
+    }
+  ],
+  // Verified Resend sender for the signup notification. The recipient
+  // (NOTIFY_TO) and RESEND_API_KEY are secrets — set them with `wrangler secret
+  // put` so the personal address and key never land in git. See README.
+  "vars": {
+    "NOTIFY_FROM": "Culprit <noreply@getculprit.app>"
   }
 }
