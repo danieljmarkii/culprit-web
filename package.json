@@ -10,7 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "assets": "node scripts/generate-assets.mjs"
+    "assets": "node scripts/generate-assets.mjs",
+    "db:migrate": "wrangler d1 migrations apply culprit-subscribers --remote"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.2.1",
@@ -20,6 +21,8 @@
     "astro": "^4.16.18"
   },
   "devDependencies": {
-    "sharp": "^0.33.5"
+    "@cloudflare/workers-types": "^4.20250109.0",
+    "sharp": "^0.33.5",
+    "wrangler": "^3.100.0"
   }
 }

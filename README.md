@@ -14,10 +14,11 @@ Spec: `docs/culprit-website-requirements.md` in `project-nyx`. This repo is
 
 | Page | State |
 |---|---|
-| `/` | Landing, **coming-soon** state (no App Store badge yet — decision D4) |
+| `/` | Landing, **coming-soon** state with **waitlist email capture** (v2-2; App Store CTA replaces it at launch) |
 | `/support` | **Live** — contact + account-deletion note (the App Store submission gate) |
-| `/privacy` | **Shell** — real policy lands in Phase 2 (B-229) |
+| `/privacy` | **Shell** + waitlist data note — real policy lands in Phase 2 (B-229) |
 | `/terms` | **Shell** — real terms land in Phase 2 (B-230 / B-270 disclaimer) |
+| `/thanks` `/oops` | **Live** — noindex waitlist success / error pages (no-JS form lands here) |
 
 ## Develop
 
@@ -63,6 +64,48 @@ fonts through fontconfig — so the Geist/Newsreader faces must be registered
 (convert the Fontsource `.woff2` to `.ttf` and drop them in a fontconfig dir).
 The committed `public/*.png` outputs mean you only need this when the brand
 changes.
+
+## Waitlist email capture (v2-2)
+
+The hero `CtaForm` (in its `waitlist` state) captures emails before the app
+ships. First-party throughout — the page still makes zero third-party requests
+and the locked CSP is untouched (`form-action 'self'` covers the same-origin
+POST; the form needs no client JS).
+
+- **Form → Worker.** The plain HTML form posts to a same-origin `POST
+  /api/subscribe` handled by `src/worker.ts`, which runs alongside the static
+  assets (assets are matched first; only `/api/subscribe` reaches the Worker).
+- **Storage (source of truth).** Signups land in **Cloudflare D1**
+  (`subscribers`, see `migrations/`) — normalized, de-duped (`INSERT OR
+  IGNORE`), with `created_at`, `source`, `country`.
+- **Notification.** Best-effort **Resend** email to the founder per signup.
+  Storage and notification are independent — a signup only fails (→ `/oops`) if
+  both fail.
+- **Flow.** Success → `303 /thanks`; bad email / total failure → `303 /oops`. A
+  honeypot field drops obvious bots.
+
+### Setup (Cloudflare + Resend)
+
+```bash
+# D1 database (already created; id is in wrangler.jsonc). To recreate:
+npx wrangler d1 create culprit-subscribers      # paste id into wrangler.jsonc
+npm run db:migrate                              # apply migrations/ to the remote DB
+
+# Founder notification (optional — storage works without it):
+npx wrangler secret put RESEND_API_KEY          # Resend API key (verify getculprit.app first)
+npx wrangler secret put NOTIFY_TO               # recipient (kept out of git)
+```
+
+Export the list:
+
+```bash
+npx wrangler d1 execute culprit-subscribers --remote \
+  --command "SELECT email, created_at, country FROM subscribers ORDER BY created_at"
+```
+
+`PUBLIC_CTA_STATE` (build-time) flips the CTA: `waitlist` (default now) →
+`preorder`/`download` at launch. Buttondown (v2 spec §6) is an easy later swap
+if double opt-in / one-click unsubscribe become worth it.
 
 ## Deploy (Cloudflare Workers Static Assets)
 

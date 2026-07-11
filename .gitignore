@@ -2,6 +2,9 @@
 dist/
 .output/
 
+# wrangler / cloudflare local state (local D1, dev cache)
+.wrangler/
+
 # dependencies
 node_modules/
 
