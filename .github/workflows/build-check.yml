@@ -1,0 +1,40 @@
+name: Build check
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Production build
+        run: npm run build
+
+      - name: Grep for stray "Nyx" in served output
+        run: |
+          if grep -riE '\bnyx\b' dist/ --include='*.html' --include='*.xml' --include='*.txt'; then
+            echo "::error::Found 'Nyx' in built output — see culprit-voice skill / CLAUDE.md brand hygiene rule"
+            exit 1
+          fi
+
+      - name: Grep for exclamation marks in visible copy
+        run: |
+          # Strip <script>/<style> bodies (CSS `!important` false-positives every page
+          # otherwise), HTML comments, <!DOCTYPE>, and remaining tags, leaving only text.
+          for f in dist/*.html; do
+            if perl -0pe 's/<script\b[^>]*>.*?<\/script>//gis; s/<style\b[^>]*>.*?<\/style>//gis; s/<!--.*?-->//gs; s/<!DOCTYPE[^>]*>//gis; s/<[^>]+>//g' "$f" | grep -q '!'; then
+              echo "::warning file=$f::Found '!' in visible copy — check against culprit-voice skill (no exclamation marks in served copy)"
+            fi
+          done
