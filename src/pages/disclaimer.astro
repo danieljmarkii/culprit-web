@@ -1,0 +1,88 @@
+---
+import Page from '../layouts/Page.astro';
+
+const title = 'Veterinary Disclaimer — Culprit';
+const description =
+  'Culprit is not a substitute for professional veterinary care, and it never gives the all-clear. What that means, and when to contact your vet.';
+---
+
+<Page
+  title={title}
+  heading="Veterinary Disclaimer"
+  description={description}
+  updated="Effective July 16, 2026"
+>
+  <p>
+    This disclaimer is part of Culprit&rsquo;s
+    <a href="/terms">Terms of Service</a>. It exists so there is no ambiguity
+    about what Culprit is for — and what it must never be used for.
+  </p>
+
+  <h2>Culprit is not a substitute for professional veterinary care</h2>
+  <p>
+    Culprit is an informational tool for recording what you observe about your
+    pet and organizing it for your veterinarian. It is <strong>not</strong> a
+    veterinary service. Nothing in Culprit — no log, trend, pattern finding, AI
+    read, chart, or report — is a diagnosis, a treatment recommendation,
+    medical advice, or a professional opinion of any kind. Using Culprit does
+    not create a veterinarian&ndash;client&ndash;patient relationship with
+    anyone.
+  </p>
+  <p>
+    Only a veterinarian who can examine your pet can diagnose or treat them.
+    Culprit is built to make that visit more useful, not to replace it.
+  </p>
+
+  <h2>Culprit never gives the all-clear</h2>
+  <p>This is a design rule of the app, and it matters for how you read it:</p>
+  <ul>
+    <li>
+      <strong>A quiet app is not a healthy pet.</strong> If Culprit shows no
+      flag, no pattern, and no alert, that means nothing concerning was
+      <em>detected in what you logged</em> — it does not mean your pet is well.
+      Culprit only knows what you record, and many serious conditions produce
+      nothing an owner can log.
+    </li>
+    <li>
+      <strong>AI reads describe one moment.</strong> An AI read of a symptom
+      photo describes what is visible in that single photo. It may flag the
+      presence of something worth a call to your vet; it will never tell you
+      the absence of a flag means your pet is fine — because it can&rsquo;t
+      know that, and neither can any single photo.
+    </li>
+    <li>
+      <strong>Patterns are associations, not causes.</strong> A pattern finding
+      means two things tended to happen near each other in your logs. It is a
+      conversation starter for your vet, not a conclusion.
+    </li>
+  </ul>
+  <p>
+    If Culprit ever appears to tell you your pet is healthy, treat that as a
+    bug in the app, not information about your pet.
+  </p>
+
+  <h2>When to contact a veterinarian</h2>
+  <p>
+    Trust your judgment over the app, always. If your pet seems unwell, is
+    behaving unusually, refuses food, or you are worried for any reason —
+    contact your veterinarian, whether or not Culprit has flagged anything. In
+    an emergency, contact a veterinarian or emergency animal hospital
+    immediately; do not wait for, or consult, the app.
+  </p>
+
+  <h2>Accuracy limits</h2>
+  <p>
+    Culprit&rsquo;s trends and findings are computed from what you logged, and
+    are only as complete as your logging. AI-assisted features (photo reads,
+    label extraction, phrasing) can be wrong or incomplete. Always verify
+    AI-extracted medication details against the physical label before relying
+    on them.
+  </p>
+
+  <h2>Your acknowledgment</h2>
+  <p>
+    By using Culprit you acknowledge that you have read and understood this
+    disclaimer, and that decisions about your pet&rsquo;s health belong with
+    you and your veterinarian.
+  </p>
+</Page>
