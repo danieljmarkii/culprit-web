@@ -6,14 +6,21 @@ Cloudflare Worker (`src/worker.ts`) for the waitlist. Full architecture and
 setup live in `README.md` — read it first; this file only covers what makes
 work here go smoothly.
 
-## Deploys are live — treat pushes to main as production
+## Deploys are live — treat EVERY push as production
 
-- Every push to `main` builds and deploys the live site (Cloudflare Workers
-  Builds: `npm run build` → `npx wrangler deploy`). There is no staging.
-- **The site that is up is the site we want.** Work on a branch, open a PR,
-  and always run `npm run build` locally before pushing — a broken build or a
-  half-done page must never reach `main`. Let the PM merge (that is the
-  deploy moment) unless they've said otherwise.
+- **Pushes to any branch deploy the live site** — verified 2026-07-16: a
+  push to a PR branch went straight to production. Workers Builds runs
+  `npm run build` → `npx wrangler deploy` on every push, and `wrangler
+  deploy` targets production regardless of branch. There is no staging and
+  no preview. Until the PM fixes the config (dashboard → Workers Builds →
+  restrict builds to `main`, or switch non-production branches to
+  `npx wrangler versions upload`), a branch + PR is **not** a safety gate
+  for the live site — only for code review.
+- **The site that is up is the site we want.** Work on a branch and open a
+  PR anyway (review + history), but treat the push itself as the deploy
+  moment: always run `npm run build` locally and finish the pre-push
+  checklist below before pushing anything — a broken build or half-done
+  page must never be pushed on any branch.
 - The stack is deliberately boring: static output, zero client JS, no
   third-party runtime requests (fonts self-hosted, CSP locked in
   `public/_headers`). Don't add scripts, analytics, CDNs, or trackers without
