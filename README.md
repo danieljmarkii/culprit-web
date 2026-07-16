@@ -7,8 +7,8 @@ support / privacy / terms pages the App Store submission requires. Served at
 Static [Astro](https://astro.build) site, deployed on **Cloudflare Pages**.
 Ships zero client JS by default — fast, calm, and on-brand.
 
-Spec: `docs/culprit-website-requirements.md` in `project-nyx`. This repo is
-**Phase 1 — "Shell + gate"**.
+Spec: `docs/culprit-website-requirements.md` in `project-nyx`. Phases 1–2
+(shell + gate, then the legal-content drop) are done.
 
 ## Status
 
@@ -16,8 +16,9 @@ Spec: `docs/culprit-website-requirements.md` in `project-nyx`. This repo is
 |---|---|
 | `/` | Landing, **coming-soon** state with **waitlist email capture** (v2-2; App Store CTA replaces it at launch) |
 | `/support` | **Live** — contact + account-deletion note (the App Store submission gate) |
-| `/privacy` | **Shell** + waitlist data note — real policy lands in Phase 2 (B-229) |
-| `/terms` | **Shell** — real terms land in Phase 2 (B-230 / B-270 disclaimer) |
+| `/privacy` | **Live** — final policy (B-229; from `project-nyx docs/legal/` PR #302, plus a site-only "Our website" waitlist section) |
+| `/terms` | **Live** — final terms incl. the Apple EULA minimum terms (B-230); incorporates the disclaimer by reference |
+| `/disclaimer` | **Live** — veterinary disclaimer (B-270), deep-linkable for the app |
 | `/thanks` `/oops` | **Live** — noindex waitlist success / error pages (no-JS form lands here) |
 
 ## Develop
