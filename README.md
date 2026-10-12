@@ -17,7 +17,8 @@ Spec: `docs/culprit-website-requirements.md` in `project-nyx`. This repo is
 | `/` | Landing, **coming-soon** state with **waitlist email capture** (v2-2; App Store CTA replaces it at launch) |
 | `/support` | **Live** — contact + account-deletion note (the App Store submission gate) |
 | `/privacy` | **Shell** + waitlist data note — real policy lands in Phase 2 (B-229) |
-| `/terms` | **Shell** — real terms land in Phase 2 (B-230 / B-270 disclaimer) |
+| `/terms` | **Shell** — real terms land in Phase 2 (B-230) |
+| `/disclaimer` | **Live** (noindex) — veterinary disclaimer from `project-nyx docs/legal/veterinary-disclaimer.md` (B-270); the app's `DISCLAIMER_URL` opens it |
 | `/thanks` `/oops` | **Live** — noindex waitlist success / error pages (no-JS form lands here) |
 
 ## Develop
