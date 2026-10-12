@@ -9,9 +9,8 @@ export default defineConfig({
   trailingSlash: 'never',
   integrations: [
     sitemap({
-      // /privacy and /terms are noindex shells in Phase 1 (real legal copy lands
-      // in Phase 2 — B-229/B-230/B-270); /disclaimer is noindex alongside them
-      // until the legal set launches; /thanks and /oops are the noindex
+      // /privacy, /terms and /disclaimer are noindex until the legal set
+      // launches; /thanks and /oops are the noindex
       // waitlist confirmation/error pages. Keep all five out of the sitemap.
       filter: (page) =>
         !page.endsWith('/privacy') &&
