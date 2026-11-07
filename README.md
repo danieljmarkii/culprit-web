@@ -16,7 +16,7 @@ Spec: `docs/culprit-website-requirements.md` in `project-nyx`. This repo is
 |---|---|
 | `/` | Landing, **coming-soon** state with **waitlist email capture** (v2-2; App Store CTA replaces it at launch) |
 | `/support` | **Live** — contact + account-deletion note (the App Store submission gate) |
-| `/privacy` | **Live** (noindex) — full policy, effective July 19, 2026 |
+| `/privacy` | **Live** (noindex) — full policy from `project-nyx docs/legal/privacy-policy.md`, effective November 7, 2026 |
 | `/terms` | **Live** (noindex) — full terms, effective July 19, 2026 |
 | `/disclaimer` | **Live** (noindex) — veterinary disclaimer from `project-nyx docs/legal/veterinary-disclaimer.md` (B-270); the app's `DISCLAIMER_URL` opens it |
 | `/thanks` `/oops` | **Live** — noindex waitlist success / error pages (no-JS form lands here) |
